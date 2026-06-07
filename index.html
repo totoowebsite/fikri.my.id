@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TOTO | Roblox Creator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+color:white;
+background:black;
+overflow-x:hidden;
+}
+
+/* Background Jepang Hitam Putih */
+
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:url("https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=1400") center center/cover;
+filter:grayscale(100%) brightness(30%);
+z-index:-2;
+}
+
+body::after{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.45);
+z-index:-1;
+}
+
+.hero{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:25px;
+}
+
+.panel{
+max-width:900px;
+width:100%;
+padding:40px;
+border-radius:25px;
+backdrop-filter:blur(12px);
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.15);
+box-shadow:0 0 40px rgba(255,255,255,.15);
+text-align:center;
+}
+
+.samurai{
+font-size:80px;
+margin-bottom:15px;
+}
+
+h1{
+font-family:'Cinzel',serif;
+font-size:60px;
+letter-spacing:4px;
+margin-bottom:10px;
+}
+
+.tagline{
+font-size:20px;
+color:#d8d8d8;
+}
+
+.desc{
+margin-top:20px;
+line-height:1.8;
+color:#ececec;
+}
+
+.section{
+margin-top:40px;
+padding-top:30px;
+border-top:1px solid rgba(255,255,255,.15);
+}
+
+.section h2{
+font-family:'Cinzel',serif;
+margin-bottom:15px;
+}
+
+.socials{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-top:20px;
+}
+
+.btn{
+display:block;
+padding:16px;
+text-decoration:none;
+color:white;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.15);
+border-radius:15px;
+transition:.3s;
+font-weight:600;
+}
+
+.btn:hover{
+transform:translateY(-5px);
+background:rgba(255,255,255,.18);
+box-shadow:0 0 20px rgba(255,255,255,.2);
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-top:20px;
+}
+
+.stat{
+background:rgba(255,255,255,.05);
+padding:20px;
+border-radius:15px;
+border:1px solid rgba(255,255,255,.1);
+}
+
+.stat h3{
+font-size:25px;
+}
+
+.footer{
+margin-top:40px;
+color:#bdbdbd;
+font-size:14px;
+}
+
+.sakura{
+position:fixed;
+top:-10px;
+animation:fall linear infinite;
+opacity:.5;
+z-index:-1;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-10vh) rotate(0deg);
+}
+100%{
+transform:translateY(110vh) rotate(360deg);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sakura" style="left:10%;animation-duration:10s;">🌸</div>
+<div class="sakura" style="left:30%;animation-duration:14s;">🌸</div>
+<div class="sakura" style="left:50%;animation-duration:12s;">🌸</div>
+<div class="sakura" style="left:70%;animation-duration:16s;">🌸</div>
+<div class="sakura" style="left:90%;animation-duration:11s;">🌸</div>
+
+<div class="hero">
+
+<div class="panel">
+
+<div class="samurai">⚔️</div>
+
+<h1>TOTO</h1>
+
+<p class="tagline">
+👑 Roblox Content Creator • Indonesia
+</p>
+
+<p class="desc">
+Selamat datang di website resmi TOTO.
+Konten kreator Roblox yang menghadirkan gameplay,
+hiburan, tips, event, dan berbagai konten menarik
+untuk komunitas Roblox Indonesia.
+</p>
+
+<div class="section">
+
+<h2>Tentang Saya</h2>
+
+<p>
+Membuat konten Roblox yang kreatif dan menghibur.
+Terus berkembang, belajar hal baru, dan membangun
+komunitas yang positif untuk para pemain Roblox.
+</p>
+
+</div>
+
+<div class="section">
+
+<h2>Statistik</h2>
+
+<div class="stats">
+
+<div class="stat">
+<h3>🎮</h3>
+<p>Roblox</p>
+</div>
+
+<div class="stat">
+<h3>🔥</h3>
+<p>Creator</p>
+</div>
+
+<div class="stat">
+<h3>⚔️</h3>
+<p>TOTO</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>🔗 Temukan Saya</h2>
+
+<div class="socials">
+
+<a href="tiktok.com/@fikrittps" class="btn">
+🎵 TikTok
+</a>
+
+<a href="https://www.instagram.com/fkriifhrudinn_?igsh=MXg0Mnhwdmg4eW14cA==" target="_blank" class="btn">
+📷 Instagram
+</a>
+
+<a href="https://whatsapp.com/channel/0029VbB87fPBA1f5qGoOi31S" target="_blank" class="btn">
+💬 WhatsApp Channel
+</a>
+
+<a href="https://discord.gg/Zuhs59GYD" target="_blank" class="btn">
+🎮 Discord
+</a>
+
+<a href="https://sociabuzz.com/totoo12/tribe" target="_blank" class="btn">
+💖 Donate
+</a>
+
+</div>
+
+</div>
+
+<div class="footer">
+⚔ TOTO COMMUNITY ⚔
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
