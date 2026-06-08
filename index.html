@@ -1,280 +1,300 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toto Website- Official Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-<title>TOTO | Roblox Creator</title>
+        body {
+            background: radial-gradient(circle at center, #1e1e1e 0%, #0a0a0a 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+        /* ==================== SCRIPT WELCOME SCREEN ==================== */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            text-align: center;
+            padding: 20px;
+        }
 
-<style>
+        .welcome-title {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+        .welcome-btn {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
 
-body{
-font-family:'Poppins',sans-serif;
-color:white;
-background:black;
-overflow-x:hidden;
-}
+        .welcome-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+        }
 
-/* Background Jepang Hitam Putih */
+        .welcome-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.1);
+        }
 
-body::before{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:url("https://images.unsplash.com/photo-1528360983277-13d401cdc186?q=80&w=1400") center center/cover;
-filter:grayscale(100%) brightness(30%);
-z-index:-2;
-}
+        /* ==================== CONTAINER PROFIL UTAMA ==================== */
+        .poster-container {
+            background: rgba(18, 18, 18, 0.95);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 30px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+        }
 
-body::after{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.45);
-z-index:-1;
-}
+        body.loaded .poster-container {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-.hero{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:25px;
-}
+        .main-title {
+            font-family: 'Bangers', cursive;
+            font-size: 3.8rem;
+            letter-spacing: 3px;
+            color: #ffffff;
+            text-shadow: 3px 3px 0px #334155;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+            line-height: 1;
+        }
 
-.panel{
-max-width:900px;
-width:100%;
-padding:40px;
-border-radius:25px;
-backdrop-filter:blur(12px);
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.15);
-box-shadow:0 0 40px rgba(255,255,255,.15);
-text-align:center;
-}
+        .subtitle {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
 
-.samurai{
-font-size:80px;
-margin-bottom:15px;
-}
+        .avatar-box {
+            width: 100%;
+            height: auto;
+            background: #121212;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
 
-h1{
-font-family:'Cinzel',serif;
-font-size:60px;
-letter-spacing:4px;
-margin-bottom:10px;
-}
+        .avatar-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
 
-.tagline{
-font-size:20px;
-color:#d8d8d8;
-}
+        .about-card {
+            background: #161616;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 25px;
+            border-left: 4px solid #475569;
+        }
 
-.desc{
-margin-top:20px;
-line-height:1.8;
-color:#ececec;
-}
+        .about-card h3 {
+            font-size: 0.9rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
 
-.section{
-margin-top:40px;
-padding-top:30px;
-border-top:1px solid rgba(255,255,255,.15);
-}
+        .about-card p {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
 
-.section h2{
-font-family:'Cinzel',serif;
-margin-bottom:15px;
-}
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 15px;
+        }
 
-.socials{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:15px;
-margin-top:20px;
-}
+        .btn-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: #1c1c1e;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease-in-out;
+        }
 
-.btn{
-display:block;
-padding:16px;
-text-decoration:none;
-color:white;
-background:rgba(255,255,255,.08);
-border:1px solid rgba(255,255,255,.15);
-border-radius:15px;
-transition:.3s;
-font-weight:600;
-}
+        .btn-link .brand-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-.btn:hover{
-transform:translateY(-5px);
-background:rgba(255,255,255,.18);
-box-shadow:0 0 20px rgba(255,255,255,.2);
-}
+        .btn-link i {
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+            color: #cbd5e1;
+        }
 
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-margin-top:20px;
-}
+        .btn-link .arrow-icon {
+            font-size: 0.75rem;
+            opacity: 0.4;
+            transition: transform 0.2s ease;
+        }
 
-.stat{
-background:rgba(255,255,255,.05);
-padding:20px;
-border-radius:15px;
-border:1px solid rgba(255,255,255,.1);
-}
+        .btn-link:hover {
+            background: #262629;
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
 
-.stat h3{
-font-size:25px;
-}
+        .btn-link:hover .arrow-icon {
+            transform: translateX(4px);
+            opacity: 1;
+        }
 
-.footer{
-margin-top:40px;
-color:#bdbdbd;
-font-size:14px;
-}
+        .btn-donate {
+            background: #ffffff !important;
+            color: #000000 !important;
+        }
+        .btn-donate i {
+            color: #000000 !important;
+        }
 
-.sakura{
-position:fixed;
-top:-10px;
-animation:fall linear infinite;
-opacity:.5;
-z-index:-1;
-}
-
-@keyframes fall{
-0%{
-transform:translateY(-10vh) rotate(0deg);
-}
-100%{
-transform:translateY(110vh) rotate(360deg);
-}
-}
-
-</style>
-</head>
-
+        .content://com.android.externalstorage.documents/tree/primary%3ADownload%2Ffikri-website::primary:Download/fikri-website/index.html
 <body>
 
-<div class="sakura" style="left:10%;animation-duration:10s;">🌸</div>
-<div class="sakura" style="left:30%;animation-duration:14s;">🌸</div>
-<div class="sakura" style="left:50%;animation-duration:12s;">🌸</div>
-<div class="sakura" style="left:70%;animation-duration:16s;">🌸</div>
-<div class="sakura" style="left:90%;animation-duration:11s;">🌸</div>
+    <div class="welcome-screen" id="welcomeScreen">
+        <h2 class="welcome-title">Welcome to Toto Website</h2>
+        <button class="welcome-btn" onclick="masukKeWebsite()">Lanjutkan</button>
+    </div>
 
-<div class="hero">
+    <div class="poster-container">
+        <h1 class="main-title">TOTO WEBSITE</h1>
+        <p class="subtitle">Roblox Content Creator</p>
 
-<div class="panel">
+        <div class="avatar-box">
+            <img src="https://cdn.phototourl.com/free/2026-06-08-118a70a1-abdb-4adf-87aa-b1a007d11f70.png" alt="Toto Roblox Poster" class="avatar-img">
+        </div>
 
-<div class="samurai">⚔️</div>
+        <div class="about-card">
+            <h3>About Me</h3>
+            <p>Halo saya <strong>Toto</strong>. Pengisi spot malam di map <strong>Salon De Fiestas</strong>. Cek kumpulan konten Roblox saya dan masuk ke sirkel dengan klik link resmi di bawah.</p>
+        </div>
 
-<h1>TOTO</h1>
+        <div class="links-container">
+            <a href="https://www.tiktok.com/@username_tiktok_utama" target="_blank" class="btn-link">
+                <div class="brand-info">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok </span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </a>
 
-<p class="tagline">
-👑 Roblox Content Creator • Indonesia
-</p>
+            <a href="https://www.tiktok.com/@totofams.12" target="_blank" class="btn-link">
+                <div class="brand-info">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok (Toto Fams)</span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </a>
 
-<p class="desc">
-Selamat datang di website resmi TOTO.
-Konten kreator Roblox yang menghadirkan gameplay,
-hiburan, party, muncak, dan berbagai konten menarik
-untuk komunitas Roblox Indonesia.
-</p>
+            <a href="https://discord.gg/Zuhs59GYD" target="_blank" class="btn-link">
+                <div class="brand-info">
+                    <i class="fab fa-discord"></i>
+                    <span>Discord Community</span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </a>
 
-<div class="section">
+            <a href="https://whatsapp.com/channel/0029VbB87fPBA1f5qGoOi31S" target="_blank" class="btn-link">
+                <div class="brand-info">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp Channel</span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </a>
 
-<h2>Tentang Saya</h2>
+            <a href="https://sociabuzz.com/totoo12/tribe" target="_blank" class="btn-link btn-donate">
+                <div class="brand-info">
+                    <i class="fas fa-heart"></i>
+                    <span>Support / Donate Me</span>
+                </div>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+            </a>
+        </div>
 
-<p>
-membuat berbagai video seru
-di Salon de Fiesta dan map party lainnya. 
-Di sini kamu bisa menemukan gameplay menarik,
-event seru, tips bermain, serta berbagai momen 
-terbaik dari dunia Roblox.
-Terima kasih telah berkunjung website toto 
-</p>
+        <p class="footer-quote">" 99% of gamblers quit before they win big. "</p>
+    </div>
 
-</div>
-
-<div class="section">
-
-<h2>Statistik</h2>
-
-<div class="stats">
-
-<div class="stat">
-<h3>🎮</h3>
-<p>Roblox</p>
-</div>
-
-<div class="stat">
-<h3>🔥</h3>
-<p>Creator</p>
-</div>
-
-<div class="stat">
-<h3>⚔️</h3>
-<p>TOTO</p>
-</div>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<h2>🔗 Temukan Saya</h2>
-
-<div class="socials">
-
-<a href="https://tiktok.com/@fikrittps" class="btn">
-🎵 TikTok
-</a>
-
-<a href="https://www.instagram.com/fkriifhrudinn_?igsh=MXg0Mnhwdmg4eW14cA==" target="_blank" class="btn">
-📷 Instagram
-</a>
-
-<a href="https://whatsapp.com/channel/0029VbB87fPBA1f5qGoOi31S" target="_blank" class="btn">
-💬 WhatsApp Channel
-</a>
-
-<a href="https://discord.gg/Zuhs59GYD" target="_blank" class="btn">
-🎮 Discord
-</a>
-
-<a href="https://sociabuzz.com/totoo12/tribe" target="_blank" class="btn">
-💖 Donate
-</a>
-
-</div>
-
-</div>
-
-<div class="footer">
-⚔ TOTO COMMUNITY ⚔
-</div>
-
-</div>
-
-</div>
+    <script>
+        function masukKeWebsite() {
+            const welcome = document.getElementById('welcomeScreen');
+            welcome.classList.add('hidden');
+            document.body.classList.add('loaded');
+        }
+    </script>
 
 </body>
-</html>
+    </html>
