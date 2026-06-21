@@ -3,7 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toto Websibe | Official Portofolio</title>
+    <title>Toto Website | Official Portofolio</title>
+    
+    <script>
+        function startLoading() {
+            let count = 0;
+            const counterInterval = setInterval(() => {
+                const loadingNumber = document.getElementById('loading-number');
+                const loadingProgress = document.getElementById('loading-progress');
+                const loader = document.getElementById('loader');
+                const btnNext = document.getElementById('btn-next');
+
+                count += Math.floor(Math.random() * 8) + 5; // Penambahan lebih cepat & agresif
+                
+                if (loadingNumber && loadingProgress) {
+                    if (count >= 100) {
+                        count = 100;
+                        clearInterval(counterInterval);
+                        
+                        if (loader && btnNext) {
+                            loader.style.opacity = '0';
+                            setTimeout(() => {
+                                loader.style.display = 'none';
+                                btnNext.style.display = 'block';
+                                btnNext.style.opacity = '1';
+                            }, 100);
+                        }
+                    }
+                    loadingNumber.innerText = count + '%';
+                    loadingProgress.style.width = count + '%';
+                }
+            }, 20); // Kecepatan interval dinaikkan maksimal
+        }
+
+        // Jalankan langsung saat window mulai memuat komponen dasar
+        window.onload = startLoading;
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;600;800&family=Space+Grotesk:wght=500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -115,7 +151,6 @@
             cursor: pointer; box-shadow: 0 0 20px var(--glow); font-family: 'Space Grotesk', sans-serif;
             text-transform: uppercase; letter-spacing: 1px; opacity: 0;
         }
-        @keyframes fadeIn { to { opacity: 1; } }
         .btn-continue:hover { background: var(--accent-red); box-shadow: 0 0 35px rgba(255,51,68,0.6); transform: scale(1.05); }
 
         /* MAIN CONTAINER */
@@ -274,7 +309,7 @@
     </div>
 
     <div id="welcome-screen">
-        <h1 class="welcome-title">Welcome to<br>Toto Websibe</h1>
+        <h1 class="welcome-title">Welcome to<br>Toto Website</h1>
         <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;">Roblox Creator & Clan Leader</p>
         
         <div class="loading-container" id="loader">
@@ -344,31 +379,4 @@
             </div>
         </div>
 
-        <h3 style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-left: 4px; margin-bottom: -5px;">Social Links Hub</h3>
-        <div class="links-wrapper">
-            
-            <a href="https://www.tiktok.com/@fikrittps" target="_blank" class="social-link" onclick="trackClick()">
-                <div class="link-content">
-                    <div class="link-icon-bg ic-tiktok"><i class="fab fa-tiktok"></i></div>
-                    <div class="link-text">
-                        <span class="link-title">TikTok Utama</span>
-                        <span class="link-desc">Konten Roblox & update harian</span>
-                    </div>
-                </div>
-                <i class="fas fa-chevron-right arrow-right"></i>
-            </a>
-
-            <a href="https://www.tiktok.com/@totofams.12" target="_blank" class="social-link" onclick="trackClick()">
-                <div class="link-content">
-                    <div class="link-icon-bg ic-tiktok"><i class="fab fa-tiktok"></i></div>
-                    <div class="link-text">
-                        <span class="link-title">TikTok Toto Fams</span>
-                        <span class="link-desc">Official akun komunitas/clan</span>
-                    </div>
-                </div>
-                <i class="fas fa-chevron-right arrow-right"></i>
-            </a>
-
-            <a href="https://discord.gg/Zuhs59GYD" target="_blank" class="social-link" onclick="trackClick()">
-                <div class="link-content">
-                    <div class="link-icon-bg ic-discord"><i clas
+        <h3 style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-left: 4px; margi
