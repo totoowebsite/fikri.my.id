@@ -3,325 +3,372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toto - Official Profile</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Toto Websibe | Official Portofolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;600;800&family=Space+Grotesk:wght=500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+        :root {
+            --bg-dark: #0a090d;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.07);
+            --accent-red: #ff3344;
+            --accent-yellow: #ffcc00;
+            --accent-blue: #00f2fe;
+            --text-main: #ffffff;
+            --text-muted: #8e8e9f;
+            --glow: rgba(255, 51, 68, 0.35);
         }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
+
         body {
-            background: radial-gradient(circle at center, #1e1e1e 0%, #0a0a0a 100%);
-            color: #e2e8f0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
-            position: relative;
+            align-items: flex-start;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 15%, rgba(255, 51, 68, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 90% 85%, rgba(0, 242, 254, 0.08) 0%, transparent 45%);
+            background-attachment: fixed;
         }
 
-        /* ==================== SCRIPT WELCOME SCREEN ==================== */
-        .welcome-screen {
+        /* AUDIO PLAYER CONTROLLER */
+        .music-control {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0a0a;
-            z-index: 9999;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--card-border);
+            padding: 10px 14px;
+            border-radius: 30px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .welcome-title {
-            font-family: 'Bangers', cursive;
-            font-size: 3rem;
-            color: #ffffff;
-            letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        .welcome-btn {
-            background: #ffffff;
-            color: #000000;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-radius: 50px;
+            gap: 10px;
+            backdrop-filter: blur(10px);
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             transition: all 0.3s ease;
         }
-
-        .welcome-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
-        }
-
-        .welcome-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(1.1);
-        }
-
-        /* ==================== CONTAINER PROFIL UTAMA ==================== */
-        .poster-container {
-            background: rgba(18, 18, 18, 0.95);
-            width: 100%;
-            max-width: 500px;
-            border-radius: 20px;
-            padding: 30px 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
-        }
-
-        body.loaded .poster-container {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .main-title {
-            font-family: 'Bangers', cursive;
-            font-size: 3.8rem;
-            letter-spacing: 3px;
-            color: #ffffff;
-            text-shadow: 3px 3px 0px #334155;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-            line-height: 1;
-        }
-
-        .subtitle {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            color: #94a3b8;
-            font-weight: 600;
-            margin-bottom: 25px;
-        }
-
-        .avatar-box {
-            width: 100%;
-            height: auto;
-            background: #121212;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-
-        .avatar-img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-        }
-
-        .about-card {
-            background: #161616;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: left;
-            margin-bottom: 25px;
-            border-left: 4px solid #475569;
-        }
-
-        .about-card h3 {
-            font-size: 0.9rem;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-        }
-
-        .about-card p {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            line-height: 1.6;
-        }
-
-        .links-container {
+        .music-control:hover { transform: scale(1.05); border-color: var(--accent-red); }
+        .music-wave {
             display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 15px;
+            align-items: flex-end;
+            gap: 2px;
+            height: 14px;
+        }
+        .music-wave span {
+            width: 3px;
+            height: 100%;
+            background: var(--accent-red);
+            border-radius: 2px;
+            animation: wave 1s ease infinite alternate;
+            animation-play-state: paused;
+        }
+        .music-wave.playing span { animation-play-state: running; }
+        .music-wave span:nth-child(2) { animation-delay: 0.2s; height: 60%; }
+        .music-wave span:nth-child(3) { animation-delay: 0.4s; height: 80%; }
+        @keyframes wave { 0% { height: 20%; } 100% { height: 100%; } }
+
+        /* LOADING & WELCOME SCREEN OVERLAY */
+        #welcome-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #0e0304 0%, #0a090d 100%);
+            z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 30px;
+            transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #welcome-screen.hidden { opacity: 0; visibility: hidden; transform: translateY(-100%); }
+        .welcome-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem; font-weight: 700; text-transform: uppercase;
+            line-height: 1.1; margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--accent-red));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .loading-container { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .loading-text { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 700; color: var(--accent-yellow); }
+        .loading-bar-bg { width: 200px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+        .loading-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent-red), var(--accent-yellow)); transition: width 0.1s ease; }
+        
+        .btn-continue {
+            display: none; background: none; border: 2px solid var(--accent-red); color: #fff;
+            padding: 16px 40px; font-size: 1rem; font-weight: 600; border-radius: 50px;
+            cursor: pointer; box-shadow: 0 0 20px var(--glow); font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase; letter-spacing: 1px; opacity: 0;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+        .btn-continue:hover { background: var(--accent-red); box-shadow: 0 0 35px rgba(255,51,68,0.6); transform: scale(1.05); }
+
+        /* MAIN CONTAINER */
+        .phone-container {
+            display: none; width: 100%; max-width: 450px; min-height: 100vh;
+            padding: 20px; flex-direction: column; gap: 20px; position: relative;
+            padding-bottom: 100px;
         }
 
-        .btn-link {
+        /* FAKE DOMAIN ADRESS BAR */
+        .fake-domain-bar {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 16px 20px;
-            background: #1c1c1e;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s ease-in-out;
+            backdrop-filter: blur(10px);
         }
+        .domain-left { display: flex; align-items: center; gap: 10px; color: var(--text-muted); font-size: 0.9rem;}
+        .domain-left i { color: #2ecc71; }
+        .domain-text { font-family: 'Space Grotesk', sans-serif; color: #fff; font-weight: 500; font-size: 0.95rem; }
+        .domain-right i { color: var(--text-muted); cursor: pointer; font-size: 0.9rem; }
 
-        .btn-link .brand-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        /* PROFILE CARD */
+        .profile-card {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 24px; padding: 30px 20px; text-align: center;
+            backdrop-filter: blur(20px); position: relative; overflow: hidden;
         }
+        .profile-card::before { content: ''; position: absolute; top:0; left:0; width:100%; height:4px; background: linear-gradient(90deg, var(--accent-red), var(--accent-blue)); }
+        .avatar-wrapper { position: relative; width: 100px; height: 100px; margin: 0 auto 12px; }
+        .avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); }
+        .verified-badge { position: absolute; bottom: 3px; right: 3px; background: #1d9bf0; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 10px; border: 2px solid #0a090d; }
+        .profile-name { font-size: 1.5rem; font-weight: 800; }
+        .profile-alias { font-size: 0.85rem; color: var(--accent-yellow); font-weight: 600; margin-bottom: 12px; text-transform: uppercase; }
+        .tag-container { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
+        .tag { background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 50px; font-size: 0.75rem; color: #d1d1db; font-weight: 600; border: 1px solid rgba(255,255,255,0.03); }
 
-        .btn-link i {
-            font-size: 1.2rem;
-            width: 20px;
-            text-align: center;
-            color: #cbd5e1;
+        /* ANALYTICS PANEL */
+        .analytics-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 16px;
+            backdrop-filter: blur(10px);
         }
+        .panel-title { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; font-weight: 700;}
+        .panel-title span { width: 6px; height: 6px; background: #2ecc71; border-radius: 50%; display: inline-block; box-shadow: 0 0 8px #2ecc71;}
+        .analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .ana-box { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.03); padding: 12px; border-radius: 12px; text-align: center; }
+        .ana-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; color: #fff; }
+        .ana-num.click-color { color: var(--accent-blue); }
+        .ana-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
 
-        .btn-link .arrow-icon {
-            font-size: 0.75rem;
-            opacity: 0.4;
-            transition: transform 0.2s ease;
+        /* ROBLOX SHOWCASE SECTION */
+        .roblox-showcase {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 16px;
         }
+        .game-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 14px;
+            overflow: hidden;
+            margin-top: 8px;
+            transition: transform 0.3s ease;
+        }
+        .game-card:hover { transform: translateY(-2px); }
+        .game-img-dummy {
+            height: 120px;
+            background: linear-gradient(45deg, #1f1c2c, #928dab);
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; color: rgba(255,255,255,0.2);
+        }
+        .game-img-dummy i { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .game-info { padding: 12px; }
+        .game-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+        .game-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); }
+        .game-meta span i { color: var(--accent-yellow); margin-right: 3px;}
 
-        .btn-link:hover {
-            background: #262629;
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+        /* LINKS PLATFORM */
+        .links-wrapper { display: flex; flex-direction: column; gap: 12px; }
+        .social-link {
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            padding: 16px; border-radius: 18px; text-decoration: none; color: #fff;
+            font-weight: 600; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            backdrop-filter: blur(10px);
         }
+        .link-content { display: flex; align-items: center; gap: 14px; }
+        .link-icon-bg { width: 38px; height: 38px; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; color: #fff; }
+        .ic-tiktok { background: linear-gradient(45deg, #ff0050, #00f2fe); }
+        .ic-discord { background: #5865F2; }
+        .ic-wa { background: #25D366; }
+        .ic-saweria { background: #faae2b; }
+        .link-title { font-size: 0.95rem; font-weight: 700; }
+        .link-desc { font-size: 0.72rem; color: var(--text-muted); font-weight: 400; margin-top: 1px; }
+        .arrow-right { color: var(--text-muted); font-size: 0.8rem; transition: transform 0.3s ease; }
+        .social-link:hover { transform: translateY(-2px); background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.15); }
+        .social-link:hover .arrow-right { transform: translateX(4px); color: #fff; }
 
-        .btn-link:hover .arrow-icon {
-            transform: translateX(4px);
-            opacity: 1;
+        /* AI CHAT FLOATING SYSTEM */
+        .ai-chat-widget {
+            position: fixed; bottom: 20px; right: 20px; max-width: 320px; width: calc(100% - 40px);
+            z-index: 10005; display: flex; flex-direction: column; align-items: flex-end;
         }
+        .ai-launcher {
+            width: 54px; height: 54px; background: linear-gradient(135deg, var(--accent-red), #b3001b);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 20px rgba(255,51,68,0.4); cursor: pointer; transition: transform 0.3s ease;
+        }
+        .ai-launcher:hover { transform: scale(1.08) rotate(5deg); }
+        .ai-launcher i { font-size: 1.4rem; color: #fff; }
+        
+        .ai-window {
+            display: none; width: 100%; height: 380px; background: #111016;
+            border: 1px solid var(--card-border); border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6); flex-direction: column;
+            overflow: hidden; margin-bottom: 12px; backdrop-filter: blur(20px);
+        }
+        .ai-header { background: rgba(255,255,255,0.03); padding: 14px; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; }
+        .ai-info { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 700; }
+        .ai-info span { width: 7px; height: 7px; background: #2ecc71; border-radius: 50%; }
+        .ai-close { cursor: pointer; color: var(--text-muted); font-size: 0.9rem; }
+        .ai-close:hover { color: #fff; }
+        
+        .ai-messages { flex: 1; padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: 0.8rem; }
+        .msg { max-width: 80%; padding: 10px 12px; border-radius: 14px; line-height: 1.4; }
+        .msg.bot { background: rgba(255,255,255,0.05); border-top-left-radius: 2px; color: #e1e1e6; }
+        .msg.user { background: var(--accent-red); color: #fff; align-self: flex-end; border-top-right-radius: 2px; }
+        
+        .ai-input-area { padding: 10px; border-top: 1px solid var(--card-border); display: flex; gap: 8px; background: rgba(0,0,0,0.2); }
+        .ai-input { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); border-radius: 20px; padding: 8px 14px; color: #fff; font-size: 0.8rem; outline: none; }
+        .ai-input:focus { border-color: var(--accent-red); }
+        .ai-send-btn { background: var(--accent-red); border: none; width: 32px; height: 32px; border-radius: 50%; color: #fff; display: flex; justify-content: center; align-items: center; cursor: pointer; }
 
-        /* Gaya Khusus untuk Link Order Am Prem */
-        .btn-order-amprem {
-            background: #e2e8f0 !important;
-            color: #0f172a !important;
-            border: 1px solid #ffffff;
-        }
-        .btn-order-amprem i {
-            color: #0f172a !important;
-        }
-
-        .btn-donate {
-            background: #ffffff !important;
-            color: #000000 !important;
-        }
-        .btn-donate i {
-            color: #000000 !important;
-        }
-
-        .footer-quote {
-            font-size: 0.7rem;
-            color: #4b5563;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-top: 25px;
-        }
+        .footer { text-align: center; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.5px; padding: 10px 0; }
+        .footer a { color: var(--accent-red); text-decoration: none; font-weight: 600; }
     </style>
 </head>
 <body>
 
-    <div class="welcome-screen" id="welcomeScreen">
-        <h2 class="welcome-title">Welcome to Toto Website</h2>
-        <button class="welcome-btn" onclick="masukKeWebsite()">Lanjutkan</button>
+    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
+    <div class="music-control" onclick="toggleMusic()">
+        <div class="music-wave" id="wave-element">
+            <span></span><span></span><span></span>
+        </div>
+        <span style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;" id="music-status">MUSIC: OFF</span>
     </div>
 
-    <div class="poster-container">
-        <h1 class="main-title">TOTO WEBSITE</h1>
-        <p class="subtitle">Roblox Content Creator</p>
-
-        <div class="avatar-box">
-            <img src="https://cdn.phototourl.com/free/2026-06-08-4e92597f-89f9-4026-b948-9b0aa18b7f55.png" alt="Toto Roblox Poster" class="avatar-img">
+    <div id="welcome-screen">
+        <h1 class="welcome-title">Welcome to<br>Toto Websibe</h1>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;">Roblox Creator & Clan Leader</p>
+        
+        <div class="loading-container" id="loader">
+            <div class="loading-text" id="loading-number">0%</div>
+            <div class="loading-bar-bg">
+                <div class="loading-bar-fill" id="loading-progress"></div>
+            </div>
         </div>
 
-        <div class="about-card">
-            <h3>About Me</h3>
-            <p>Halo saya <strong>Toto</strong>. Pengisi spot malam di map <strong>Salon De Fiestas</strong>. Cek kumpulan konten Roblox saya dan masuk ke sirkel dengan klik link resmi di bawah.</p>
-        </div>
-
-        <div class="links-container">
-            <a href="https://www.tiktok.com/@fikrittps" target="_blank" class="btn-link">
-                <div class="brand-info">
-                    <i class="fab fa-tiktok"></i>
-                    <span>TikTok</span>
-                </div>
-                <i class="fas fa-chevron-right arrow-icon"></i>
-            </a>
-
-            <a href="https://www.tiktok.com/@totofams.12" target="_blank" class="btn-link">
-                <div class="brand-info">
-                    <i class="fab fa-tiktok"></i>
-                    <span>TikTok (Toto Fams)</span>
-                </div>
-                <i class="fas fa-chevron-right arrow-icon"></i>
-            </a>
-
-            <!-- TOMBOL ORDER AM PREM (ON-PREMISE) TERBARU -->
-            <a href="https://wa.me/573028384663?text=bang-aku-mau-order-am-prem" target="_blank" class="btn-link btn-order-amprem">
-                <div class="brand-info">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Order Am Prem</span>
-                </div>
-                <i class="fas fa-chevron-right arrow-icon"></i>
-            </a>
-
-            <a href="https://discord.gg/Zuhs59GYD" target="_blank" class="btn-link">
-                <div class="brand-info">
-                    <i class="fab fa-discord"></i>
-                    <span>Discord Community</span>
-                </div>
-                <i class="fas fa-chevron-right arrow-icon"></i>
-            </a>
-
-            <a href="https://whatsapp.com/channel/0029VbB87fPBA1f5qGoOi31S" target="_blank" class="btn-link">
-                <div class="brand-info">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>WhatsApp Channel</span>
-                </div>
-                <i class="fas fa-chevron-right arrow-icon"></i>
-            </a>
-
-            <a href="https://saweria.co/totosaweria" target="_blank" class="btn-link btn-donate">
-                <div class="brand-info">
-                    <i class="fas fa-heart"></i>
-                    <span>Support / Donate Me</span>
-                </div>
-                <i class="fas fa-chevron-right arrow-icon"></i>
-            </a>
-        </div>
-
-        <p class="footer-quote">" 99% of gamblers quit before they win big. "</p>
+        <button class="btn-continue" id="btn-next" onclick="enterSite()">Klik untuk Lanjutkan</button>
     </div>
 
-    <script>
-        function masukKeWebsite() {
-            const welcome = document.getElementById('welcomeScreen');
-            welcome.classList.add('hidden');
-            document.body.classList.add('loaded');
-        }
-    </script>
+    <div class="phone-container" id="main-content">
+        
+        <div class="fake-domain-bar">
+            <div class="domain-left">
+                <i class="fas fa-shield-alt"></i>
+                <span class="domain-text">toto.bio/style</span>
+            </div>
+            <div class="domain-right" onclick="alert('Link disalin ke Clipboard!')">
+                <i class="far fa-copy"></i>
+            </div>
+        </div>
+        
+        <div class="profile-card">
+            <div class="avatar-wrapper">
+                <img src="https://cdn.phototourl.com/free/2026-06-08-4e92597f-89f9-4026-b948-9b0aa18b7f55.png" alt="Toto Fikri Avatar" class="avatar">
+                <div class="verified-badge"><i class="fas fa-check"></i></div>
+            </div>
+            <h2 class="profile-name">Toto / Fikri</h2>
+            <div class="profile-alias">@fikrittps</div>
+            
+            <div class="tag-container">
+                <span class="tag"><i class="fas fa-cube" style="color: #e22b26; margin-right: 3px;"></i> Roblox Dev</span>
+                <span class="tag"><i class="fab fa-tiktok" style="color: #00f2fe; margin-right: 3px;"></i> Content Creator</span>
+                <span class="tag"><i class="fas fa-users" style="color: var(--accent-yellow); margin-right: 3px;"></i> Toto Fams</span>
+            </div>
+        </div>
 
-</body>
-</html>
+        <div class="analytics-panel">
+            <div class="panel-title"><span></span> Live Traffic Analytics</div>
+            <div class="analytics-grid">
+                <div class="ana-box">
+                    <div class="ana-num" id="view-count">1,402</div>
+                    <div class="ana-label">Total Views</div>
+                </div>
+                <div class="ana-box">
+                    <div class="ana-num click-color" id="click-count">0</div>
+                    <div class="ana-label">Link Clicks</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="roblox-showcase">
+            <div class="panel-title" style="margin-bottom: 6px;"><i class="fas fa-gamepad" style="color: var(--accent-red);"></i> Roblox Project Showcase</div>
+            <div class="game-card">
+                <div class="game-img-dummy">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <div class="game-info">
+                    <div class="game-name">Mountain Survival Admin Map</div>
+                    <div class="game-meta">
+                        <span><i class="fas fa-hammer"></i> Active Scripting</span>
+                        <span><i class="fas fa-star"></i> 4.9 Rating</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-left: 4px; margin-bottom: -5px;">Social Links Hub</h3>
+        <div class="links-wrapper">
+            
+            <a href="https://www.tiktok.com/@fikrittps" target="_blank" class="social-link" onclick="trackClick()">
+                <div class="link-content">
+                    <div class="link-icon-bg ic-tiktok"><i class="fab fa-tiktok"></i></div>
+                    <div class="link-text">
+                        <span class="link-title">TikTok Utama</span>
+                        <span class="link-desc">Konten Roblox & update harian</span>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right arrow-right"></i>
+            </a>
+
+            <a href="https://www.tiktok.com/@totofams.12" target="_blank" class="social-link" onclick="trackClick()">
+                <div class="link-content">
+                    <div class="link-icon-bg ic-tiktok"><i class="fab fa-tiktok"></i></div>
+                    <div class="link-text">
+                        <span class="link-title">TikTok Toto Fams</span>
+                        <span class="link-desc">Official akun komunitas/clan</span>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right arrow-right"></i>
+            </a>
+
+            <a href="https://discord.gg/Zuhs59GYD" target="_blank" class="social-link" onclick="trackClick()">
+                <div class="link-content">
+                    <div class="link-icon-bg ic-discord"><i clas
