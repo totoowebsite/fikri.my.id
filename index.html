@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Toto's Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #0d0d0d;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- BACKGROUND EMBARA CHAKRA --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://raw.githubusercontent.com/FikriTTPs/hosting-bebas/main/bg_totos.png');
+            background-size: cover;
+            background-position: center top;
+            filter: brightness(0.15) contrast(1.3) saturate(1.4);
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 50% 30%, rgba(255, 69, 0, 0.35) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- EFEK CHAKRA MELAYANG --- */
+        .chakra-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            bottom: -10px;
+            width: 4px;
+            height: 4px;
+            background: #ff5500;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff2200, 0 0 20px #ff7700;
+            opacity: 0;
+            animation: floatUp 8s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-105vh) translateX(50px) scale(0); opacity: 0; }
+        }
+
+        .particle:nth-child(1) { left: 15%; animation-duration: 6s; }
+        .particle:nth-child(2) { left: 35%; animation-duration: 9s; animation-delay: 2s; }
+        .particle:nth-child(3) { left: 55%; animation-duration: 7s; animation-delay: 1s; }
+        .particle:nth-child(4) { left: 75%; animation-duration: 10s; animation-delay: 4s; }
+
+        /* --- WELCOME SCREEN OVERLAY --- */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #1a0b05 0%, #050201 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease;
+        }
+
+        #welcome-screen.hide { opacity: 0; pointer-events: none; }
+        .welcome-box { text-align: center; width: 90%; max-width: 450px; }
+        .welcome-title { font-family: 'Permanent Marker', cursive; font-size: 2.3rem; color: #ff5500; text-shadow: 0 0 20px rgba(255, 85, 0, 0.5); margin-bottom: 10px; }
+        .welcome-sub { font-size: 0.85rem; color: #888; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        .loading-container { width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid #ff5500; border-radius: 20px; padding: 3px; margin-bottom: 25px; }
+        .loading-bar { height: 10px; width: 0%; background: linear-gradient(90deg, #ff2200, #ff7700); border-radius: 20px; animation: fillBar 2s forwards ease-in-out; }
+        .btn-continue { background: linear-gradient(135deg, #ff5500 0%, #cc3300 100%); color: white; border: none; padding: 12px 30px; font-size: 0.9rem; font-weight: 600; border-radius: 50px; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(15px); transition: all 0.4s ease; }
+        .btn-continue.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        @keyframes fillBar { 100% { width: 100%; } }
+
+        /* --- BENTO MASTER GRID CONTAINER --- */
+        .bento-container {
+            max-width: 480px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px auto;
+        }
+
+        /* Base Styling untuk Setiap Kotak Bento */
+        .bento-box {
+            background: rgba(18, 9, 5, 0.75);
+            border: 1px solid rgba(255, 85, 0, 0.25);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- 1. NAV BAR TOP --- */
+        .bento-nav {
+            grid-column: span 4;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: rgba(255, 85, 0, 0.1);
+            border-color: rgba(255, 85, 0, 0.4);
+        }
+        .nav-links { display: flex; gap: 15px; }
+        .nav-links span { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #ff7700; letter-spacing: 1px; cursor: pointer; }
+        .nav-links span.active { color: #fff; background: #ff5500; padding: 2px 10px; border-radius: 6px; }
+        .nav-toggle { font-size: 0.75rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 5px; }
+
+        /* --- 2. HERO HEADER BLOCK --- */
+        .bento-hero {
+            grid-column: span 4;
+            padding: 24px 16px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(255,85,0,0.15) 0%, rgba(18,9,5,0.8) 100%);
+        }
+        .avatar { width: 85px; height: 85px; border-radius: 50%; border: 2px solid #ff5500; box-shadow: 0 0 20px rgba(255, 85, 0, 0.4); margin-bottom: 12px; }
+        .name-title { font-size: 1.5rem; font-weight: 800; }
+        .name-title span { color: #ff5500; }
+        .bio-text { color: #aaa; font-size: 0.75rem; margin-top: 4px; max-width: 90%; }
+
+        /* --- 3. STATS COUNT GRID --- */
+        .bento-stat { grid-column: span 2; padding: 12px; }
+        .stat-val { font-size: 1.3rem; font-weight: 800; color: #ff5500; line-height: 1.2; }
+        .stat-lbl { font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- 4. INTERACTIVE COMPACT MUSIC PLAYER --- */
+        .bento-music {
+            grid-column: span 4;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 14px 20px;
+            cursor: pointer;
+            border-color: rgba(255, 85, 0, 0.35);
+        }
+        .music-info { display: flex; align-items: center; gap: 12px; }
+        .music-info i { font-size: 1.2rem; color: #ff5500; }
+        .track-title { font-size: 0.78rem; font-weight: 700; color: #fff; }
+        .track-sub { font-size: 0.65rem; color: #666; }
+
+        /* --- 5. SOCIAL LINK ITEMS (2x2 GRID ACTION) --- */
+        .bento-link {
+            grid-column: span 2;
+            padding: 16px;
+            align-items: flex-start;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .bento-link i { font-size: 1.3rem; margin-bottom: 10px; }
+        .bento-link span { font-size: 0.8rem; font-weight: 700; }
+        .bento-link p { font-size: 0.6rem; color: #777; margin-top: 2px; }
+        
+        .bento-link:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 85, 0, 0.12);
+            border-color: #ff5500;
+            box-shadow: 0 10px 20px rgba(255, 85, 0, 0.15);
+        }
+        .bento-link.tiktok-p i { color: #ff0050; }
+        .bento-link.tiktok-f i { color: #00f2fe; }
+        .bento-link.discord i { color: #5865F2; }
+        .bento-link.whatsapp i { color: #25D366; }
+        
+        /* Tombol Saweria panjang di bawah */
+        .bento-link.saweria { grid-column: span 4; flex-direction: row; justify-content: flex-start; gap: 15px; align-items: center; }
+        .bento-link.saweria i { color: #faae2b; margin-bottom: 0; }
+
+        /* --- 6. MANGA QUOTE COMPONENT --- */
+        .bento-quote {
+            grid-column: span 4;
+            align-items: flex-start;
+            padding: 20px;
+            border-left: 4px solid #ff5500;
+            background: rgba(25, 10, 5, 0.5);
+        }
+        .quote-txt { font-size: 0.75rem; font-style: italic; color: #d0d0d0; line-height: 1.5; margin-bottom: 8px; text-align: left; }
+        .quote-auth { font-size: 0.65rem; font-weight: 700; color: #ff7700; text-transform: uppercase; }
+
+        /* --- FOOTER CREDIT --- */
+        .bento-footer { grid-column: span 4; background: transparent; border: none; box-shadow: none; padding: 10px; }
+        .footer-txt { font-size: 0.6rem; color: #444; text-transform: uppercase; text-align: center; letter-spacing: 1px; line-height: 1.6; }
+
+        /* --- COMPACT AI CHAT WIDGET --- */
+        #ai-chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end; }
+        #chat-circle { width: 52px; height: 52px; background: linear-gradient(135deg, #ff5500 0%, #ff2200 100%); border-radius: 50%; box-shadow: 0 5px 20px rgba(255, 34, 0, 0.4); cursor: pointer; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.3rem; transition: transform 0.3s; }
+        #chat-circle:hover { transform: scale(1.08) rotate(10deg); }
+        #chat-box { width: 300px; height: 400px; background: rgba(12, 6, 4, 0.98); border: 1.5px solid rgba(255, 85, 0, 0.4); border-radius: 18px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: absolute; bottom: 70px; right: 0; display: none; flex-direction: column; overflow: hidden; }
+        #chat-box.show { display: flex; }
+        .chat-header { background: rgba(255, 85, 0, 0.15); padding: 12px; border-bottom: 1px solid rgba(255, 85, 0, 0.25); display: flex; justify-content: space-between; align-items: center; }
+        .chat-header h4 { font-size: 0.8rem; color: #ff7700; }
+        .chat-close { color: #777; cursor: pointer; font-size: 0.9rem; }
+        .chat-content { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .chat-content::-webkit-scrollbar { width: 4px; }
+        .chat-content::-webkit-scrollbar-thumb { background: rgba(255, 85, 0, 0.2); }
+        .msg { max-width: 85%; padding: 8px 12px; border-radius: 10px; font-size: 0.75rem; line-height: 1.4; }
+        .msg.ai { background: rgba(255, 255, 255, 0.05); color: #ccc; align-self: flex-start; }
+        .msg.user { background: rgba(255, 85, 0, 0.2); color: white; align-self: flex-end; border: 1px solid rgba(255, 85, 0, 0.2); }
+        .typing-indicator { display: flex; gap: 3px; padding: 4px; align-items: center; }
+        .typing-indicator span { width: 5px; height: 5px; background: #ff5500; border-radius: 50%; animation: blink 1.4s infinite both; }
+        .typing-indicator span:nth-child(2) { animation-delay: .2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: .4s; }
+        @keyframes blink { 0%, 100% { opacity: .2; } 20% { opacity: 1; } }
+        .chat-input-area { padding: 8px; border-top: 1px solid rgba(255, 85, 0, 0.15); display: flex; gap: 8px; background: rgba(0,0,0,0.2); }
+        .chat-input-area input { flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 85, 0, 0.15); padding: 8px 12px; border-radius: 8px; color: white; font-size: 0.75rem; }
+        .chat-input-area input:focus { outline: none; border-color: #ff5500; }
+        .chat-submit { background: #ff5500; border: none; color: white; padding: 0 12px; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgm" loop src="https://assets.mixkit.co/music/preview/mixkit-serene-view-1378.mp3"></audio>
+
+    <div class="chakra-container">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div id="welcome-screen">
+        <div class="welcome-box">
+            <h1 class="welcome-title">WELCOME TO TOTO WEBSITE</h1>
+            <p class="welcome-sub">Roblox Content Creator & Hub</p>
+            <div class="loading-container">
+                <div class="loading-bar"></div>
+            </div>
+            <button class="btn-continue" id="btn-next" onclick="enterSite()">
+                Lanjutkan <i class="fa-solid fa-arrow-right" style="margin-left: 6px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="bento-container">
+        
+        <div class="bento-box bento-nav">
+            <div class="nav-links">
+                <span class="active">HOME</span>
+                <span>NARUTO</span>
+                <span>QUOTES</span>
+            </div>
+            <div class="nav-toggle">ON <i class="fa-solid fa-toggle-on" style="color: #ff5500;"></i></div>
+        </div>
+
+        <div class="bento-box bento-hero">
+            <img src="https://cdn.phototourl.com/free/2026-06-08-4e92597f-89f9-4026-b948-9b0aa18b7f55.png" alt="Avatar" class="avatar">
+            <h2 class="name-title">Toto</span></h2>
+            <p class="bio-text">Content Creator TikTok & Roblox Enthusiast. Welcome to my command center.</p>
+        </div>
+
+        <div class="bento-box bento-stat">
+            <div class="stat-val">900</div>
+            <div class="stat-lbl">Followers</div>
+        </div>
+        <div class="bento-box bento-stat">
+            <div class="stat-val">89K</div>
+            <div class="stat-lbl">Likes</div>
+        </div>
+
+        <div class="bento-box bento-music" onclick="toggleMusic()">
+            <div class="music-info">
+                <i class="fa-solid fa-compact-disc fa-spin" id="music-icon" style="animation-play-state: paused;"></i>
+                <div style="text-align: left;">
+                    <div class="track-title">Naruto Title Track (Remix)</div>
+                    <div class="track-sub">Roar beatzo • Click to Play</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-play" id="play-btn" style="color: #555; font-size: 0.8rem;"></i>
+        </div>
+
+        <a href="https://www.tiktok.com/@fikrittps" target="_blank" class="bento-box bento-link tiktok-p">
+            <i class="fa-brands fa-tiktok"></i>
+            <span>TikTok</span>
+            <p>Personal Acc</p>
+        </a>
+
+        <a href="https://www.tiktok.com/@totofams.12" target="_blank" class="bento-box bento-link tiktok-f">
+            <i class="fa-brands fa-tiktok"></i>
+            <span>Toto Fams</span>
+            <p>Official Clan</p>
+        </a>
+
+        <a href="https://discord.gg/Zuhs59GYD" target="_blank" class="bento-box bento-link discord">
+            <i class="fa-brands fa-discord"></i>
+            <span>Discord</span>
+            <p>Join Community</p>
+        </a>
+
+        <a href="https://wa.me/573028384663?text=bang-aku-mau-order-am-prem" target="_blank" class="bento-box bento-link whatsapp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>Order AM</span>
+            <p>Premium Pack</p>
+        </a>
+
+        <a href="https://saweria.co/totosaweria" target="_blank" class="bento-box bento-link saweria">
+            <i class="fa-solid fa-pizza-slice"></i>
+            <div style="text-align: left;">
+                <span style="display: block;">Donasi Saweria</span>
+                <p style="margin-top: 0;">Dukung perkembangan konten saya disini</p>
+            </div>
+        </a>
+
+        <div class="bento-box bento-quote">
+            <p class="quote-txt">"Jika kamu tidak percaya pada impianmu, maka kamu tidak akan pernah mencapainya. Jika kamu tidak berusaha, maka kamu tidak akan pernah menang. Percayalah pada dirimu sendiri dan terus maju!"</p>
+            <div class="quote-auth">- Naruto Uzumaki</div>
+        </div>
+
+        <div class="bento-box bento-footer">
+            <div class="footer-txt">
+                ARCHIVE BY AMELIA_RCHM & TOTO DESIGN<br>
+                <span style="color: #222;">PICT BY AI ART • COPYRIGHT 2026</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="ai-chat-widget">
+        <div id="chat-box">
+            <div class="chat-header">
+                <h4><i class="fa-solid fa-robot"></i> Kloning AI Toto</h4>
+                <div class="chat-close" onclick="toggleChat()"><i class="fa-solid fa-xmark"></i></div>
+            </div>
+            <div class="chat-content" id="chat-messages">
+                <div class="msg ai">
+                    Yow! Gua asisten AI-nya **Toto (Fikri)**. Lu bisa tanya apa aja seputar order AM, clan Toto Fams, atau mabar Roblox! Ada yang mau ditanyain?
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ketik kata kunci (order, mabar, tiktok)...">
+                <button class="chat-submit" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <div id="chat-circle" onclick="toggleChat()">
+            <i class="fa-solid fa-comment-dots"></i>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgm');
+        const musicIcon = document.getElementById('music-icon');
+        const playBtn = document.getElementById('play-btn');
+
+        // Loader
+        setTimeout(() => {
+            const btn = document.getElementById('btn-next');
+            btn.classList.add('show');
+            btn.previousElementSibling.style.display = 'none'; 
+        }, 2000);
+
+        function enterSite() {
+            document.getElementById('welcome-screen').classList.add('hide');
+            audio.play().then(() => {
+                musicIcon.style.animationPlayState = 'running';
+                playBtn.className = "fa-solid fa-pause";
+            }).catch(e => console.log("Autoplay ditolak browser."));
+        }
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicIcon.style.animationPlayState = 'running';
+                playBtn.className = "fa-solid fa-pause";
+            } else {
+                audio.pause();
+                musicIcon.style.animationPlayState = 'paused';
+                playBtn.className = "fa-solid fa-play";
+            }
+        }
+
+        function toggleChat() {
+            document.getElementById('chat-box').classList.toggle('show');
+        }
+
+        function getBotResponse(input) {
+            const query = input.toLowerCase();
+            if (query.includes('halo') || query.includes('hi') || query.includes('p')) {
+                return "Halo juga! Ada yang bisa dibantu? Tanya aja tentang order AM, Tiktok, Discord, atau seputar Roblox!";
+            }
+            if (query.includes('order') || query.includes('am') || query.includes('premium')) {
+                return "Untuk order **Alight Motion Premium**, langsung aja klik tombol **Order AM** di dashboard grid ya!";
+            }
+            if (query.includes('roblox') || query.includes('mabar') || query.includes('game')) {
+                return "Gua aktif main Roblox! Info mabar atau pembagian private server biasanya di-share di server Discord, pastiin lu udah join.";
+            }
+            if (query.includes('tiktok') || query.includes('vt')) {
+                return "Gua punya dua akun TikTok utama: Akun personal di **@fikrittps** dan clan di **@totofams.12**.";
+            }
+            if (query.includes('discord') || query.includes('dc')) {
+                return "Yuk join komunitas resmi kita di **Discord Server**! Klik kotak grid Discord di atas ya.";
+            }
+            if (query.includes('donasi') || query.includes('saweria')) {
+                return "Makasih dukungannya! Lu bisa support gua melalui kotak link **Saweria** panjang yang di atas.";
+            }
+            return "Waduh, gua kurang paham. Coba ketik kata kunci ringkas seperti: 'order', 'tiktok', 'discord', atau 'roblox'.";
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const messagesCont = document.getElementById('chat-messages');
+            const text = input.value.trim();
+            if (text === "") return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'msg user';
+            userMsg.innerText = text;
+            messagesCont.appendChild(userMsg);
+            input.value = '';
+            messagesCont.scrollTop = messagesCont.scrollHeight;
+
+            const typing = document.createElement('div');
+            typing.className = 'msg ai typing-indicator';
+            typing.innerHTML = '<span></span><span></span><span></span>';
+            
+            setTimeout(() => {
+                messagesCont.appendChild(typing);
+                messagesCont.scrollTop = messagesCont.scrollHeight;
+            }, 300);
+
+            setTimeout(() => {
+                typing.remove();
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'msg ai';
+                aiMsg.innerHTML = getBotResponse(text).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                messagesCont.appendChild(aiMsg);
+                messagesCont.scrollTop = messagesCont.scrollHeight;
+            }, 1100);
+        }
+
+        document.getElementById('chat-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
