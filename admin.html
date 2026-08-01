@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - TotoMarket</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #0b0f17;
+      --bg-sidebar: #111827;
+      --bg-card: #1f293d;
+      --accent-green: #10b981;
+      --accent-cyan: #06b6d4;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background-color: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-scroll {
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      overflow-x: auto;
+      padding: 0.5rem;
+      gap: 0.5rem;
+    }
+
+    .nav-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-link {
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.6rem 1rem;
+      color: var(--text-muted);
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .nav-link.active {
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 1rem;
+    }
+
+    .header-info {
+      margin-bottom: 1.2rem;
+    }
+
+    .header-info h2 {
+      font-size: 1.3rem;
+    }
+
+    .admin-section {
+      display: none;
+    }
+
+    .admin-section.active {
+      display: block;
+    }
+
+    .grid-stats {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    @media (min-width: 600px) {
+      .grid-stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .card-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--accent-cyan);
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-header {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      min-width: 520px;
+    }
+
+    th, td {
+      padding: 0.7rem 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.8rem;
+    }
+
+    th {
+      color: var(--text-muted);
+    }
+
+    .badge {
+      padding: 0.2rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    .badge-success { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+    .badge-pending { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+    .badge-failed { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+
+    .form-group {
+      margin-bottom: 0.8rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.65rem;
+      background: #111827;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .btn {
+      padding: 0.65rem 1rem;
+      background: var(--accent-cyan);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .proof-thumb {
+      width: 42px;
+      height: 42px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+    }
+
+    .proof-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .proof-lightbox.active {
+      display: flex;
+    }
+
+    .proof-lightbox img {
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: 10px;
+    }
+
+    .proof-lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 1.6rem;
+      color: #fff;
+      cursor: pointer;
+      background: rgba(255,255,255,0.1);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <i class="fa-solid fa-shield-halved"></i> TotoAdmin
+    </div>
+    <span style="font-size: 0.75rem; color: var(--accent-green);"><i class="fa-solid fa-circle" style="font-size: 6px;"></i> Online</span>
+  </div>
+
+  <div class="nav-scroll">
+    <button class="nav-link active" onclick="switchTab('dashboard', this)"><i class="fa-solid fa-chart-line"></i> Dashboard</button>
+    <button class="nav-link" onclick="switchTab('produk', this)"><i class="fa-solid fa-cubes"></i> Produk</button>
+    <button class="nav-link" onclick="switchTab('transaksi', this)"><i class="fa-solid fa-list-check"></i> Transaksi</button>
+    <button class="nav-link" onclick="switchTab('pengaturan', this)"><i class="fa-solid fa-gear"></i> Pengaturan</button>
+  </div>
+
+  <main class="main-content">
+    <div class="header-info">
+      <h2 id="pageTitle">Dashboard Panel</h2>
+    </div>
+
+    <!-- DASHBOARD -->
+    <section id="section-dashboard" class="admin-section active">
+      <div class="grid-stats">
+        <div class="card-stat">
+          <div>
+            <div class="stat-title">Saldo Digiflazz</div>
+            <div class="stat-value" id="digiflazzBalance" style="color: var(--warning);">Mengecek...</div>
+          </div>
+          <div class="stat-icon"><i class="fa-solid fa-wallet"></i></div>
+        </div>
+
+        <div class="card-stat">
+          <div>
+            <div class="stat-title">Total Omset</div>
+            <div class="stat-value" id="totalOmset">Rp 0</div>
+          </div>
+          <div class="stat-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+        </div>
+
+        <div class="card-stat">
+          <div>
+            <div class="stat-title">Total Transaksi</div>
+            <div class="stat-value" id="totalTrx">0</div>
+          </div>
+          <div class="stat-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span>Transaksi Terbaru</span>
+          <button class="btn" style="width: auto; padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="loadAdminData()">Refresh</button>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Ref ID</th>
+                <th>SKU / Produk</th>
+                <th>Tujuan</th>
+                <th>Akun Roblox</th>
+                <th>Harga</th>
+                <th>Bukti Transfer</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="dashboardTrxTable">
+              <tr><td colspan="8" style="text-align: center; color: var(--text-muted);">Belum ada transaksi</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Margin Profit Default</div>
+        <form onsubmit="event.preventDefault(); saveSettings();">
+          <div class="form-group">
+            <input type="number" class="form-control" id="quickMargin" value="1000" placeholder="Rp per transaksi">
+          </div>
+          <button type="submit" class="btn">Simpan Profit</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- PRODUK -->
+    <section id="section-produk" class="admin-section">
+      <div class="card">
+        <div class="card-header">
+          <span>Daftar Produk Digiflazz</span>
+          <button class="btn" id="btnSync" style="width: auto; padding: 0.3rem 0.6rem;" onclick="syncProducts()"><i class="fa-solid fa-rotate"></i> Sync</button>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>SKU</th>
+                <th>Nama Produk</th>
+                <th>Kategori</th>
+                <th>Harga</th>
+              </tr>
+            </thead>
+            <tbody id="productTable">
+              <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Klik Sync untuk mengambil data produk.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRANSAKSI -->
+    <section id="section-transaksi" class="admin-section">
+      <div class="card">
+        <div class="card-header">
+          <span>Semua Transaksi Masuk</span>
+          <button class="btn" style="width: auto; padding: 0.3rem 0.6rem;" onclick="loadAdminData()">Refresh</button>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Waktu</th>
+                <th>Ref ID</th>
+                <th>SKU / Produk</th>
+                <th>Tujuan</th>
+                <th>Akun Roblox</th>
+                <th>Harga</th>
+                <th>Bukti Transfer</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="fullTrxTable">
+              <tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Belum ada riwayat transaksi.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PENGATURAN -->
+    <section id="section-pengaturan" class="admin-section">
+      <div class="card">
+        <div class="card-header">Pengaturan Website</div>
+        <form onsubmit="event.preventDefault(); saveSettings();">
+          <div class="form-group">
+            <label>Margin Profit (Rp)</label>
+            <input type="number" class="form-control" id="mainMargin" value="1000">
+          </div>
+          <div class="form-group">
+            <label>Status Server</label>
+            <select class="form-control" id="siteStatus">
+              <option value="active">Online / Normal</option>
+              <option value="maintenance">Mode Perbaikan</option>
+            </select>
+          </div>
+          <button type="submit" class="btn"><i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX BUKTI TRANSFER -->
+  <div class="proof-lightbox" id="proofLightbox" onclick="if(event.target===this) closeProofLightbox()">
+    <span class="proof-lightbox-close" onclick="closeProofLightbox()">&times;</span>
+    <img id="proofLightboxImg" src="" alt="Bukti Transfer">
+  </div>
+
+  <script>
+    function switchTab(tabName, element) {
+      document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+
+      document.getElementById('section-' + tabName).classList.add('active');
+      element.classList.add('active');
+
+      const titles = {
+        'dashboard': 'Dashboard Panel',
+        'produk': 'Produk Digiflazz',
+        'transaksi': 'Riwayat Transaksi',
+        'pengaturan': 'Pengaturan Web'
+      };
+      document.getElementById('pageTitle').innerText = titles[tabName];
+    }
+
+    async function updateStatus(ref_id, status) {
+      try {
+        const res = await fetch(`/api/admin/transaction/${ref_id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: status })
+        });
+
+        const result = await res.json();
+        if (result.status || result.success) {
+          alert(`Berhasil! Status ${ref_id} diubah jadi: ${status}`);
+          loadAdminData();
+        } else {
+          alert('Gagal: ' + (result.message || 'Respons tidak valid'));
+        }
+      } catch (err) {
+        alert('Kesalahan jaringan!');
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function togglePass(btn) {
+      const span = btn.previousElementSibling;
+      if (!span) return;
+      const shown = span.getAttribute('data-shown') === 'true';
+      if (shown) {
+        span.textContent = '••••••••';
+        span.setAttribute('data-shown', 'false');
+      } else {
+        span.textContent = span.getAttribute('data-pass') || '(kosong)';
+        span.setAttribute('data-shown', 'true');
+      }
+    }
+
+    function openProofLightbox(src) {
+      document.getElementById('proofLightboxImg').src = src;
+      document.getElementById('proofLightbox').classList.add('active');
+    }
+
+    function closeProofLightbox() {
+      document.getElementById('proofLightbox').classList.remove('active');
+      document.getElementById('proofLightboxImg').src = '';
+    }
+
+    async function loadAdminData() {
+      // 1. Cek Saldo
+      try {
+        const res = await fetch('/api/digiflazz/cek-saldo');
+        const data = await res.json();
+        const balanceEl = document.getElementById('digiflazzBalance');
+
+        if (data.success && data.data) {
+          balanceEl.innerText = 'Rp ' + Number(data.data.deposit || 0).toLocaleString('id-ID');
+          balanceEl.style.color = 'var(--accent-green)';
+        } else {
+          balanceEl.innerText = 'Rp 0 (IP Unverified)';
+          balanceEl.style.color = 'var(--danger)';
+        }
+      } catch (err) {
+        document.getElementById('digiflazzBalance').innerText = 'Rp 0';
+      }
+
+      // 2. Fetch Data Transaksi Masuk
+      try {
+        const resTrx = await fetch('/api/admin/transactions');
+        let transactions = await resTrx.json();
+        
+        if (transactions.data && Array.isArray(transactions.data)) {
+          transactions = transactions.data;
+        }
+
+        if (Array.isArray(transactions) && transactions.length > 0) {
+          let dashRows = '';
+          let fullRows = '';
+          let totalOmset = 0;
+
+          transactions.forEach((trx, index) => {
+            const statusStr = trx.status || "Pending";
+            const isSuccess = statusStr.toLowerCase() === "success";
+            const isCancelled = statusStr.toLowerCase() === "cancelled" || statusStr.toLowerCase() === "failed";
+
+            let badgeClass = "badge-pending";
+            if (isSuccess) badgeClass = "badge-success";
+            else if (isCancelled) badgeClass = "badge-failed";
+
+            const price = Number(trx.price || trx.harga || 0);
+            const refId = trx.ref_id || trx.id || '-';
+            const sku = trx.buyer_sku_code || trx.layanan || trx.product_name || '-';
+            const target = trx.customer_no || trx.tujuan || '-';
+            const timeStr = trx.waktu || trx.createdAt || '-';
+            const accPassword = trx.account_password || trx.password || '';
+            const proofImg = trx.proof_image || trx.bukti_transfer || trx.payment_proof || '';
+
+            if (isSuccess) totalOmset += price;
+
+            const actionBtn = `
+            <div style="display:flex;gap:4px;">
+              <button onclick="updateStatus('${refId}', 'Success')" style="background:#10b981;color:#000;border:none;padding:4px 8px;border-radius:4px;font-weight:bold;cursor:pointer;">✔ ACC</button>
+              <button onclick="updateStatus('${refId}', 'Cancelled')" style="background:#ef4444;color:#fff;border:none;padding:4px 8px;border-radius:4px;font-weight:bold;cursor:pointer;">✖ Tolak</button>
+            </div>
+            `;
+
+            // Kolom akun roblox: username selalu tampil di "Tujuan".
+            // Password (kalau ada, khusus produk "Via Login") disembunyikan default, bisa di-klik untuk lihat.
+            const accCell = accPassword
+              ? `<span class="pass-mask" data-pass="${escapeHtml(accPassword)}" data-shown="false">••••••••</span>
+                 <button type="button" onclick="togglePass(this)" style="margin-left:4px;background:none;border:none;color:var(--text-muted);cursor:pointer;">👁</button>`
+              : `<span style="color:var(--text-muted);">-</span>`;
+
+            // Kolom bukti transfer: thumbnail kecil, klik untuk lihat ukuran penuh
+            const proofCell = proofImg
+              ? `<img src="${proofImg}" class="proof-thumb" onclick="openProofLightbox('${proofImg}')" alt="Bukti Transfer">`
+              : `<span style="color:var(--text-muted);">-</span>`;
+
+            if (index < 5) {
+              dashRows += `
+              <tr>
+                <td>${refId}</td>
+                <td>${sku}</td>
+                <td>${target}</td>
+                <td>${accCell}</td>
+                <td>Rp ${price.toLocaleString("id-ID")}</td>
+                <td>${proofCell}</td>
+                <td><span class="badge ${badgeClass}">${statusStr}</span></td>
+                <td>${actionBtn}</td>
+              </tr>`;
+            }
+
+            fullRows += `
+            <tr>
+              <td>${timeStr}</td>
+              <td>${refId}</td>
+              <td>${sku}</td>
+              <td>${target}</td>
+              <td>${accCell}</td>
+              <td>Rp ${price.toLocaleString("id-ID")}</td>
+              <td>${proofCell}</td>
+              <td><span class="badge ${badgeClass}">${statusStr}</span></td>
+              <td>${actionBtn}</td>
+            </tr>`;
+          });
+
+          document.getElementById('dashboardTrxTable').innerHTML = dashRows;
+          document.getElementById('fullTrxTable').innerHTML = fullRows;
+          document.getElementById('totalTrx').innerText = transactions.length;
+          document.getElementById('totalOmset').innerText = 'Rp ' + totalOmset.toLocaleString('id-ID');
+        } else {
+          document.getElementById('dashboardTrxTable').innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted);">Belum ada transaksi</td></tr>`;
+          document.getElementById('fullTrxTable').innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Belum ada riwayat transaksi.</td></tr>`;
+        }
+      } catch (err) {
+        console.error("Gagal memuat transaksi:", err);
+      }
+    }
+
+    async function syncProducts() {
+      const btn = document.getElementById('btnSync');
+      btn.innerText = "Syncing...";
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/digiflazz/sync-produk', { method: 'POST' });
+        const data = await res.json();
+
+        if (data.success || data.status) {
+          alert('Berhasil sync data produk!');
+          loadProducts();
+        } else {
+          alert('Gagal sync: ' + (data.message || 'Error pada server backend'));
+        }
+      } catch (err) {
+        alert('Gagal koneksi ke server untuk sync!');
+      } finally {
+        btn.innerHTML = '<i class="fa-solid fa-rotate"></i> Sync';
+        btn.disabled = false;
+      }
+    }
+
+    async function loadProducts() {
+      try {
+        const res = await fetch('/api/digiflazz/produk');
+        let data = await res.json();
+        
+        let products = Array.isArray(data) ? data : (data.data || data.products || []);
+
+        const pTable = document.getElementById('productTable');
+        if (Array.isArray(products) && products.length > 0) {
+          let rows = '';
+          products.forEach(p => {
+            rows += `
+              <tr>
+                <td>${p.buyer_sku_code || p.sku || '-'}</td>
+                <td>${p.product_name || p.nama || '-'}</td>
+                <td>${p.category || p.kategori || '-'}</td>
+                <td>Rp ${Number(p.price || p.harga || 0).toLocaleString('id-ID')}</td>
+              </tr>
+            `;
+          });
+          pTable.innerHTML = rows;
+        } else {
+          pTable.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Tidak ada produk ditemukan. Klik Sync.</td></tr>`;
+        }
+      } catch (err) {
+        console.error("Gagal memuat produk:", err);
+      }
+    }
+
+    function saveSettings() {
+      const margin = document.getElementById('mainMargin').value || document.getElementById('quickMargin').value;
+      alert('Pengaturan disimpan! Margin: Rp ' + margin);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadAdminData();
+      loadProducts();
+    });
+
+    setInterval(() => {
+      loadAdminData();
+    }, 5000);
+  </script>
+</body>
+</html>
